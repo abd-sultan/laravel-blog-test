@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Article;
 use App\Models\Category;
+use Purifier;
 
 class ArticleController extends Controller
 {
@@ -37,6 +38,8 @@ class ArticleController extends Controller
             'content' => 'required',
             'category_id' => 'nullable|exists:categories,id'
         ]);
+
+        $validated['content'] = clean($validated['content']);
 
         $article = Article::create($validated);
 
@@ -75,6 +78,8 @@ class ArticleController extends Controller
             'content' => 'required',
             'category_id' => 'nullable|exists:categories,id'
         ]);
+
+        $validated['content'] = clean($validated['content']);
 
         $article->update($validated);
 
